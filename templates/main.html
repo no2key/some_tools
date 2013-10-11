@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block css %}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+
+        <button type="button" class="btn btn-primary" id="new-update">新的更新</button><br/>
+
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>IP列表</th>
+                    <th>更新日期</th>
+                    <th>查看</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for item in operations %}
+                <tr>
+                    <td class="id">{{ item.id }}</td>
+                    <td class="ip_list">{{ item.o_ips }}</td>
+                    <td class="date_time">{{ item.o_time|date:"Y-m-d H:i" }}</td>
+                    <td class="view"><a href="/details/{{ item.id }}" class="btn">详情</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div id="modal-new-update" class="modal hide fade" tabindex="-1"
+             data-width="1000">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h3>输入要更新的IP列表，每行一个。</h3>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="span6">
+                        <form class="form-horizontal">
+                            {% csrf_token %}
+                            <div class="control-group">
+                                <label class="control-label" for="ip-list">IP列表:</label>
+                                <textarea id="ip-list" rows="10"></textarea>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn">取消</button>
+                <button type="button" class="btn btn-danger" id="do_update">开始更新</button>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script src="/static/js/main.js"></script>
+{% endblock %}

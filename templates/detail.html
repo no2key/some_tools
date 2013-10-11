@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block css %}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+
+        <a href="/" class="btn btn-info" >返 回</a><br/>
+
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>时间</th>
+                    <th>IP详情</th>
+                    <th>执行结果</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for item in tasks %}
+                <tr>
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.t_time|date:"Y-m-d H:i" }}</td>
+                    <td>{{ item.t_content }}</td>
+                    <td>{{ item.t_result }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script src="/static/js/main.js"></script>
+{% endblock %}
