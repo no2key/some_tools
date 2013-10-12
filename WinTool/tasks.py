@@ -15,8 +15,8 @@ def invoke_shell_remote(shell_path, ip, port=36000, username='Administrator', pa
     client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     client.connect(ip, port, username, password)
     _, out, _ = client.exec_command(shell_path)
-    output = []
-    result = ''.join(output)
+    output = out.readlines()
+    result = "<br />".join(output)
     return result
 
 
