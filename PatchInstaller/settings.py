@@ -83,6 +83,9 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 )
 
+import djcelery
+djcelery.setup_loader()
+
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = ')4ndk6y1+0oflcq4nr2)*(u!#wz2c63b-lq^*25cgtyd%v%hg_'
 

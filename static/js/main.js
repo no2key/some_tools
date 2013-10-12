@@ -29,7 +29,7 @@ $(function(){
         );
         $("#modal-new-update").modal('hide');
         setTimeout(reload, 2000)
-    })
+    });
 
     function reload() {
         location.reload();

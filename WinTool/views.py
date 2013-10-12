@@ -37,7 +37,7 @@ def do_update(request):
 
 
 def per_ip(ip, op_id):
-    result = test.delay(
+    result = invoke_shell_remote.delay(
         "/cygdrive/d/wintool/WinTool.exe -Patch:down && /cygdrive/d/wintool/WinTool.exe -Patch:ins", ip
     )
     if not result.result:
