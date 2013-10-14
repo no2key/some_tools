@@ -1,18 +1,21 @@
 #coding:utf-8
 
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from django.http import HttpResponse
 from models import Operation, TaskModel
 from celery.result import AsyncResult
-from tasks import test, invoke_shell_remote
+from tasks import invoke_shell_remote
 
 
+@login_required
 def index(request):
     operations = Operation.objects.all().order_by("-id")
     return render(request, "main.html", {"operations": operations})
 
 
+@login_required
 def get_detail(request, pk):
     refresh_task_queue()
     op = get_object_or_404(Operation, pk=pk)
@@ -20,6 +23,7 @@ def get_detail(request, pk):
     return render(request, "detail.html", {"tasks": tasks})
 
 
+@login_required
 def do_update(request):
     if request.method == "POST":
         ips = request.POST["ips"]
