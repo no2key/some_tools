@@ -1,0 +1,13 @@
+echo '#!/bin/sh
+spawn passwd
+sleep 1
+expect "assword:"
+send "{{ password }}\r"
+expect "assword:"
+send "{{ password }}\r"
+expect eof
+' > temp_change_password.sh
+chmod +x temp_change_password.sh
+expect -f temp_change_password.sh
+sleep 5
+rm -rf temp_change_password.sh

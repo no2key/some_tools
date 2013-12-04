@@ -9,6 +9,9 @@ $(function(){
     $("#new-update").click(function(){
         $("#modal-new-update").modal();
     });
+    $("#change-password").click(function(){
+        $("#modal-change-password").modal();
+    });
 
     $("#do_update").click(function(){
         var ip_list = $("#ip-list").val();
@@ -28,10 +31,36 @@ $(function(){
             }
         );
         $("#modal-new-update").modal('hide');
+        $("#modal-circle").modal();
         setTimeout(reload, 2000)
     });
 
+    $("#do_change_pass").click(function(){
+        var ip_list = $("#ip-list-password").val();
+        var ips = ip_list.replace(/\r?\n/g, ";");
+        var password = $("#password").val();
+        $.ajax(
+            {
+                'type': 'post',
+                'url': '/do_change_pass/',
+                'data': {
+                    ips: ips,
+                    password: password,
+                    csrfmiddlewaretoken: csrf
+                },
+                'dataType': 'json',
+                success: function (resp) {
+                    console.log(resp);
+                }
+            }
+        );
+        $("#modal-change-password").modal('hide');
+        $("#modal-circle").modal();
+        setTimeout(reload, 5000)
+    });
+
     function reload() {
+        $("#modal-circle").modal('hide');
         location.reload();
     }
 

@@ -6,7 +6,7 @@
 {% block content %}
     <div class="container">
 
-        <a href="/" class="btn btn-info" >返 回</a><br/>
+        <a href="javascript:history.back()" class="btn btn-info" >返 回</a><br/>
 
         <table class="table table-bordered table-hover">
             <thead>
@@ -30,10 +30,18 @@
             {% endfor %}
             </tbody>
         </table>
-
+        <div class="well">PENDING表示操作正在执行。本页面每5秒自动刷新。</div>
     </div>
 {% endblock %}
 
 {% block script %}
     <script src="/static/js/main.js"></script>
+    <script>
+        setInterval(
+            function(){
+                location.reload();
+            },
+            5000
+        )
+    </script>
 {% endblock %}
