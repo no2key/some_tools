@@ -107,6 +107,7 @@ def refresh_task_queue():
 
 @login_required
 def change_password(request):
+    refresh_task_queue()
     items = []
     operations = Password.objects.all().order_by("-id")
     for op in operations:
