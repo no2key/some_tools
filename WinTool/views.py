@@ -34,6 +34,7 @@ def do_update(request):
         op_id = op
         ip_list = ips.split(";")
         for ip in ip_list:
+            ip = ip.strip()
             if ip:
                 per_ip(ip, op_id)
         resp = "success"
@@ -109,9 +110,9 @@ def refresh_task_queue():
 def change_password(request):
     refresh_task_queue()
     items = []
-    operations = Password.objects.all().order_by("-id")
+    operations = Password.objects.all().order_by("-p_time")
     for op in operations:
-        task = op.passwordmodel_set.all()[0]
+        task = op.passwordmodel_set.all().order_by("-id")[0]
         items.append((op, task))
     return render(request, "password.html", {"items": items})
 
@@ -120,16 +121,24 @@ def change_password(request):
 def do_change_pass(request):
     if request.method == "POST":
         ips = request.POST["ips"]
+        old_password = request.POST["old_password"]
         new_password = request.POST["password"]
         ip_list = ips.split(";")
         for ip in ip_list:
+            ip = ip.strip()
             if ip:
                 try:
                     op = Password.objects.get(p_ip=ip)
-                    cur_pass = op.p_password
+                    if old_password.strip():
+                        cur_pass = old_password
+                    else:
+                        cur_pass = op.p_password
                     op.p_password = new_password
                 except:
-                    cur_pass = "1qazXSW@"
+                    if old_password.strip():
+                        cur_pass = old_password
+                    else:
+                        cur_pass = "1qazXSW@"
                     op = Password(p_ip=ip, p_password=new_password)
                 op.save()
                 op_id = op

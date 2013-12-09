@@ -38,6 +38,7 @@ $(function(){
     $("#do_change_pass").click(function(){
         var ip_list = $("#ip-list-password").val();
         var ips = ip_list.replace(/\r?\n/g, ";");
+        var old_password = $("#old_password").val();
         var password = $("#password").val();
         $.ajax(
             {
@@ -45,6 +46,7 @@ $(function(){
                 'url': '/do_change_pass/',
                 'data': {
                     ips: ips,
+                    old_password: old_password,
                     password: password,
                     csrfmiddlewaretoken: csrf
                 },
